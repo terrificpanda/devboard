@@ -21,15 +21,19 @@ ENV VITE_OTEL_ENABLED=$VITE_OTEL_ENABLED \
 
 RUN npm run build
 
+RUN chmod -R u=rwX,go=rX /app/dist
+
 FROM dhi.io/node:26
 
 WORKDIR /app
 
-COPY --from=build /app/dist ./dist
+COPY --from=build --chown=1000:1000 /app/dist/ ./dist/
 
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=build --chown=1000:1000 /app/node_modules ./node_modules
 
-COPY --chmod=0644 vite.preview.config.js ./vite.config.js
+COPY  --chown=1000:1000 --chmod=0644 vite.preview.config.js ./vite.config.js
+
+USER 1000:1000
 
 EXPOSE 4173
 
