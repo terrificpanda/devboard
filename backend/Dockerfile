@@ -2,17 +2,17 @@ FROM dhi.io/golang:1-alpine AS builder
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY --chmod=0644 go.mod go.sum ./
 RUN go mod download
 
-COPY . .
+COPY --chmod=0644 . .
 RUN CGO_ENABLED=0 go build -o devboard-backend .
 
 FROM dhi.io/golang:1-alpine
 
 WORKDIR /app
 
-COPY --from=builder /app/devboard-backend ./devboard-backend
+COPY --from=builder --chown=65532:65532 /app/devboard-backend ./devboard-backend
 
 RUN chmod +x ./devboard-backend
 
