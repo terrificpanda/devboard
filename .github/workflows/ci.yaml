@@ -1,26 +1,19 @@
-name: Docker Push
+name: CI
 
 on:
-  workflow_call:
-    inputs:
-      image_tag:
-        description: Immutable tag to push (e.g. sha-abc1234)
-        required: true
-        type: string
+  push:
+   branches: feature/github-actions-practice
 
 jobs:
-  build-push:
-    runs-on: ubuntu-latest        # amd64 — matches the EKS nodes
-    strategy:
-      fail-fast: false
-      matrix:
-        folders: ['backend', 'frontend', 'ai-service']
+  code:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
 
       - name: Docker Setup [Login]
-        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4
+        uses: docker/login-action@v4
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
