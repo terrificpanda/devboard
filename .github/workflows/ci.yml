@@ -1,5 +1,6 @@
 # Goal - I have to Lint, Build, Test the code for Frontend & Backend
 # then Push the images to DockerHub 
+# Commiting things.
 name: CI
 
 on: 
