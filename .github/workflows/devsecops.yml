@@ -3,8 +3,9 @@
 name: DevSecOps
 
 on:
-    push:
-        branches: [master]
+    #push:
+    #    branches: [master]
+    workflow_dispatch:
 
 jobs:
 
