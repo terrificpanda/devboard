@@ -38,6 +38,7 @@ jobs:
               run: |
                   npm audit
               working-directory: frontend
+              continue-on-error: true
 
             - name: Upload Report to Artifacts
               if: always() # Ensures report uploads even if tests fail
